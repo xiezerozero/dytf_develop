@@ -1,5 +1,5 @@
 {
-  "name": "dytf_develop",
+  "name": "dytf/dytf_develop",
   "description": "The Dytf Develop Packages",
   "autoload": {
     "psr-4": {
