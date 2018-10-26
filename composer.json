@@ -1,0 +1,13 @@
+{
+  "name": "dytf_develop",
+  "description": "The Dytf Develop Packages",
+  "autoload": {
+    "psr-4": {
+      "Dytf\\": "src/"
+    },
+    "files": ["src/OKCoin/OKCoin.php"]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  }
+}
