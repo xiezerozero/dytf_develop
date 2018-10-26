@@ -1,8 +1,12 @@
 <?php
 
-if (!function_exists('curl_init')) {
-	throw new Exception('The OKCoin client library requires the CURL PHP extension.');
+if (!extension_loaded('curl')) {
+    throw new Exception('The OKCoin client library requires the CURL PHP extension.');
 }
+
+//if (!function_exists('curl_init')) {
+//	throw new Exception('The OKCoin client library requires the CURL PHP extension.');
+//}
 
 require_once (dirname(__FILE__) . '/Exception.php');
 require_once (dirname(__FILE__) . '/Requestor.php');
