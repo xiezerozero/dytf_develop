@@ -9,9 +9,6 @@ namespace Dytf\HuoBi;
 class Request
 {
 
-    const ACCESS_KEY = '40523793-d01e326d-0fe067f9-54328';
-
-    const SECRET_KEY = '0029dc55-da625680-40d176a5-54cd3';
     //	private $url = 'https://api.hadax.com';
     private $url = 'https://api.huobi.pro';
 
@@ -21,7 +18,7 @@ class Request
     public $api_method = '';
     public $req_method = '';
 
-    public function __construct($accessKey = self::ACCESS_KEY, $secretKey = self::SECRET_KEY)
+    public function __construct($accessKey, $secretKey)
     {
         $this->accessKey = $accessKey;
         $this->secretKey = $secretKey;
