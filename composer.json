@@ -1,6 +1,7 @@
 {
   "name": "dytf/dytf_develop",
   "description": "The Dytf Develop Packages",
+  "license": "XL",
   "autoload": {
     "psr-4": {
       "Dytf\\": "src/"
