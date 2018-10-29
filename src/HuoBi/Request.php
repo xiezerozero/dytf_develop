@@ -56,6 +56,16 @@ class Request
         return json_decode($this->curl($url), true);
     }
 
+    // 全部symbol的交易行情
+    public function market_tickers()
+    {
+        $this->api_method = '/market/tickers';
+        $this->req_method = 'GET';
+
+        $url = $this->create_sign_url();
+        return json_decode($this->curl($url), true);
+    }
+
     // 获取 Market Depth 数据
     public function get_market_depth($symbol = '', $type = '')
     {
@@ -203,6 +213,26 @@ class Request
         return json_decode($return, true);
     }
 
+    // 批量取消符合条件的订单
+    public function batchCancelOrder($accountId, $symbol = '', $side = '', $size = 100)
+    {
+        $this->api_method = '/v1/order/orders/batchCancelOpenOrders';
+        $this->req_method = 'POST';
+        $postdata = [
+            'account-id' => $accountId,
+            'size' => $size,
+        ];
+        if ($symbol) {
+            $postdata['symbol'] = $symbol;
+        }
+        if ($side) {
+            $postdata['side'] = $side;
+        }
+        $url = $this->create_sign_url($postdata);
+        $return = $this->curl($url);
+        return json_decode($return, true);
+    }
+
     // 查询某个订单详情
     public function get_order($order_id)
     {
@@ -259,6 +289,16 @@ class Request
             $postdata['size'] = $size;
         }
         $url = $this->create_sign_url($postdata);
+        $return = $this->curl($url);
+        return json_decode($return, true);
+    }
+
+    // 获取所有当前帐号下未成交订单
+    public function get_open_orders($params = [])
+    {
+        $this->api_method = '/v1/order/openOrders';
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url($params);
         $return = $this->curl($url);
         return json_decode($return, true);
     }
@@ -377,54 +417,98 @@ class Request
     }
 
     // 借贷订单
-    public function get_loan_orders($symbol = '', $currency = '', $start_date, $end_date, $states, $from, $direct, $size)
+    public function loanOrders($params = [])
     {
-        $this->api_method = "/v1/margin/loan-orders";
+        $this->api_method = '/v1/margin/loan-orders';
         $this->req_method = 'GET';
-        $postdata = [
-            'symbol' => $symbol,
-            'currency' => $currency,
-            'states' => $states,
-        ];
-        if ($currency) {
-            $postdata['currency'] = $currency;
-        }
-        if ($start_date) {
-            $postdata['start-date'] = $start_date;
-        }
-        if ($end_date) {
-            $postdata['end-date'] = $end_date;
-        }
-        if ($from) {
-            $postdata['from'] = $from;
-        }
-        if ($direct) {
-            $postdata['direct'] = $direct;
-        }
-        if ($size) {
-            $postdata['size'] = $size;
-        }
-        $url = $this->create_sign_url($postdata);
+        $url = $this->create_sign_url($params);
+        $return = $this->curl($url);
+        return json_decode($return, true);
+    }
+
+    // 借贷账户详情
+    public function margin_balance($params = [])
+    {
+        $this->api_method = "/v1/margin/accounts/balance";
+        $this->req_method = 'POST';
+        $url = $this->create_sign_url($params);
         $return = $this->curl($url);
         $result = json_decode($return, true);
         return $result;
     }
 
-    // 借贷账户详情
-    public function margin_balance($symbol = '')
+    // ETF换入换出的基本信息，ETF换入换出状态，以及ETF的成分结构
+    public function etfSwapConfig($params = [])
     {
-        $this->api_method = "/v1/margin/accounts/balance";
-        $this->req_method = 'POST';
-        $postdata = [
-        ];
-        if ($symbol) {
-            $postdata['symbol'] = $symbol;
-        }
-        $url = $this->create_sign_url($postdata);
-        $return = $this->curl($url);
-        $result = json_decode($return, true);
-        return $result;
+        $this->api_method = '/etf/swap/config';
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
     }
+
+    // ETF换入数量
+    public function etfSwapIn($params = [])
+    {
+        $this->api_method = '/etf/swap/in';
+        $this->req_method = 'POST';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // ETF换出数量
+    public function etfSwapOut($params = [])
+    {
+        $this->api_method = '/etf/swap/out';
+        $this->req_method = 'POST';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // ETF换入换出操作的明细记录
+    public function etfList($params = [])
+    {
+        $this->api_method = '/etf/list';
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // 获取ETF净值
+    public function etfHistoryKline($params = [])
+    {
+        $this->api_method = '/quotation/market/history/kline';
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // 母账户执行母子账户之间的划转
+    public function subuserTransfer($params = [])
+    {
+        $this->api_method = '/v1/subuser/transfer';
+        $this->req_method = 'POST';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // 母账户查询其下所有子账户的各币种汇总余额
+    public function subuserAggregateBalance($params = [])
+    {
+        $this->api_method = '/v1/subuser/aggregate-balance';
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url($params);
+        return json_decode($this->curl($url), true);
+    }
+
+    // 母账户查询子账户各币种账户余额
+    public function subuserBalance($subUid)
+    {
+        $this->api_method = " /v1/account/accounts/{$subUid}";
+        $this->req_method = 'GET';
+        $url = $this->create_sign_url();
+        return json_decode($this->curl($url), true);
+    }
+
     /**
      * 虚拟币提现API
      */
