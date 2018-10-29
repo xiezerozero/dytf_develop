@@ -83,7 +83,7 @@ class OKCoin_Rpc {
 		// Decode response
 		try {
 			$body = $response['body'];
-			$json = json_decode($body);
+			$json = json_decode($body, true);
 		} catch (Exception $e) {
 			echo "Invalid response body" . $response['statusCode'] . $response['body'];
 		}

@@ -149,4 +149,64 @@ class OKCoin extends OKCoinBase {
 		return $this -> post("/api/v1/future_position_4fix.do", $params);
 	}
 
+	// 查询提币BTC/LTC/ETH/ETC/BCH信息
+	public function withDrawInfo($params = null)
+    {
+        return $this->post('/api/v1/withdraw_info.do', $params);
+    }
+
+    // 查询手续费
+    public function orderFee($params = null)
+    {
+        return $this->post('/api/v1/order_fee.do', $params);
+    }
+
+    // 获取放款深度前10
+    public function lendDepth($params = null)
+    {
+        return $this->post('/api/v1/lend_depth.do', $params);
+    }
+
+    // 查询用户借款信息
+    public function borrowsInfo($params = null)
+    {
+        return $this->post('/api/v1/borrows_info.do', $params);
+    }
+
+    // 申请借款
+    public function borrowMoney($params = null)
+    {
+        return $this->post('/api/v1/borrow_money.do', $params);
+    }
+
+    // 取消借款申请
+    public function cancelBorrow($params = null)
+    {
+        return $this->post('/api/v1/cancel_borrow.do', $params);
+    }
+
+    // 获取借款订单记录
+    public function borrowOrderInfo($params = null)
+    {
+        return $this->post('/api/v1/borrow_order_info.do', $params);
+    }
+
+    // 用户还全款
+    public function repayment($params = null)
+    {
+        return $this->post('/api/v1/repayment.do', $params);
+    }
+
+    // 未还款列表
+    public function unRepaymentsInfo($params = null)
+    {
+        return $this->post('/api/v1/unrepayments_info.do', $params);
+    }
+
+    // 获取用户提现/充值记录
+    public function accountRecords($params = null)
+    {
+        return $this->post('/api/v1/account_records.do', $params);
+    }
+
 }
